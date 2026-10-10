@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Arena X – USP'er</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+ROOT
+========================================================= */
+
+:root {
+  --arena-x-bg: #1F2D23;
+  --arena-x-text: #FFFDBA;
+  --arena-x-accent: #ff6f42;
+  --arena-x-accent-light: #ffad42;
+  --arena-x-card-bg: #253029;
+  --arena-x-muted: rgba(255,253,186,0.65);
+  --arena-x-focus-ring: #ff6f42;
+  --arena-x-radius: 20px;
+
+  --arena-x-font-display: "Poppins", sans-serif;
+  --arena-x-font-body: "Poppins", sans-serif;
+}
+
+/* =========================================================
+RESET
+========================================================= */
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:var(--arena-x-bg);
+  color:var(--arena-x-text);
+  font-family:var(--arena-x-font-body);
+  line-height:1.6;
+}
+
+/* =========================================================
+ACCESSIBILITY
+========================================================= */
+
+.skip-link{
+  position:absolute;
+  left:-9999px;
+  top:0;
+}
+
+.skip-link:focus{
+  left:20px;
+  top:20px;
+  background:#fff;
+  color:#000;
+  padding:1rem;
+  z-index:9999;
+  border-radius:10px;
+}
+
+/* =========================================================
+HEADING
+========================================================= */
+
+.usp-heading{
+  text-align:center;
+  margin-bottom:4rem;
+}
+
+.usp-heading h1{
+  font-family:var(--arena-x-font-display);
+  color:var(--arena-x-text);
+
+}
+
+.usp-heading p{
+  max-width: 40rem;
+  margin:1rem auto 0;
+  font-size:1.325rem;
+  color:var(--arena-x-muted);
+}
+
+/* =========================================================
+GRID
+========================================================= */
+
+.usp-grid{
+  display:grid;
+  gap:2rem;
+  max-width:1200px;
+  margin:0 auto;
+  list-style:none;
+  padding:0;
+}
+
+@media(min-width:900px){
+
+  .usp-grid{
+    grid-template-columns:repeat(6,1fr);
+  }
+
+  .usp-grid li:nth-child(1),
+  .usp-grid li:nth-child(2),
+  .usp-grid li:nth-child(3){
+    grid-column:span 2;
+  }
+
+  .usp-grid li:nth-child(4){
+    grid-column:2 / span 2;
+  }
+
+  .usp-grid li:nth-child(5){
+    grid-column:4 / span 2;
+  }
+
+}
+
+/* =========================================================
+USP CARD
+========================================================= */
+
+.usp-card{
+  padding:2rem 1.75rem;
+  border:2px solid transparent;
+  border-radius:var(--arena-x-radius);
+  background:var(--arena-x-card-bg);
+
+  cursor:default;
+  transition:
+    transform 0.35s cubic-bezier(.22, .68, 0, 1.2),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.usp-card:hover{
+  transform:translateY(-20px) scale(1.02);
+  border-color:var(--arena-x-focus-ring);
+}
+
+
+/* =========================================================
+CARD HEADER
+========================================================= */
+
+.usp-card header{
+  display:flex;
+  align-items:flex-start;
+  gap:1rem;
+  margin-bottom:1.5rem;
+}
+
+/* =========================================================
+NUMBER BADGE
+========================================================= */
+
+.usp-number{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  flex-shrink:0;
+
+  min-width:50px;
+  height:50px;
+
+  margin-top:2px;
+
+  border-radius:10px;
+
+  background:var(--arena-x-accent);
+  color:#000;
+
+  font-family:var(--arena-x-font-display);
+  font-size:2rem;
+  line-height:1;
+}
+
+.usp-card:hover .usp-number{
+  background:var(--arena-x-accent-light);
+  transform:rotate(-10deg) scale(1.2);
+}
+
+/* =========================================================
+TITLE
+========================================================= */
+
+.usp-card h2,
+.usp-card h3{
+  margin:0;
+  color:var(--arena-x-text);
+  font-size:1.525rem;
+  font-family:var(--arena-x-font-display);
+}
+
+/* =========================================================
+TEXT
+========================================================= */
+
+.usp-text{
+  color:var(--arena-x-muted);
+  font-size:1.125rem;
+}
+
+.usp-card:hover .usp-text,
+.usp-card:focus .usp-text{
+  color:var(--arena-x-text);
+}
+
+/* =========================================================
+TAGS
+========================================================= */
+
+.usp-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.8rem;
+
+  list-style:none;
+
+  padding:0;
+  margin-top:1.5rem;
+}
+
+.usp-tags li{
+  background:var(--arena-x-accent);
+  color:var(--arena-x-bg);
+  padding:.45rem .9rem;
+  border-radius:999px;
+  font-size:1.125rem;
+}
+
+.usp-tags li:hover,
+.usp-tags li:focus{
+  background:var(--arena-x-accent-light);
+  transform:scale(1.05);
+}
+
+/* =========================================================
+SCROLL REVEAL
+========================================================= */
+
+.reveal{
+  opacity:0;
+  transform:translateY(80px);
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.usp-grid li:nth-child(1) article{
+  transition-delay:0.05s;
+}
+
+.usp-grid li:nth-child(2) article{
+  transition-delay:0.15s;
+}
+
+.usp-grid li:nth-child(3) article{
+  transition-delay:0.25s;
+}
+
+.usp-grid li:nth-child(4) article{
+  transition-delay:0.35s;
+}
+
+.usp-grid li:nth-child(5) article{
+  transition-delay: 0.45s;
+}
+
+/* =========================================================
+IDLE GLOW
+========================================================= */
+
+@keyframes arena-x-idle-glow {
+
+  0%,100%{
+    box-shadow:0 0 0 0 rgba(255,110,66,0.3);
+  }
+
+  50%{
+    box-shadow:0 0 0 5px rgba(255,111,66,0.12);
+  }
+
+}
+
+.usp-card.visible:not(:hover){
+  animation:arena-x-idle-glow 4s ease-in-out infinite;
+  animation-delay:var(--idle-delay, 0s);
+}
+
+
+</style>
+</head>
+
+<body>
+
+<a href="#usp-main" class="skip-link" tabindex="0">
+  Spring til indhold
+</a>
+
+<section
+  class="usp-section"
+  aria-labelledby="usp-heading"
+>
+
+  <!-- ======================================
+  HEADING
+  ======================================= -->
+
+  <div class="usp-heading">
+
+    <h1
+      id="usp-heading"
+      tabindex="0"
+    >
+      Arena X USP'er
+    </h1>
+
+    <p tabindex="0">
+      Oplev hvad der gør Arena X anderledes med fokus på
+      fællesskab, praksis, sport og personlig udvikling.
+    </p>
+
+  </div>
+
+  <!-- ======================================
+  GRID
+  ======================================= -->
+
+  <ul
+    class="usp-grid"
+    id="usp-main"
+    role="list"
+  >
+
+    <!-- ======================================
+    CARD 1
+    ======================================= -->
+
+    <li>
+
+      <article
+        class="usp-card reveal"
+        tabindex="0"
+        role="article"
+        aria-labelledby="usp1-title"
+        aria-describedby="usp1-text"
+        style="--idle-delay:.2s"
+      >
+
+        <header>
+
+          <div
+            class="usp-number"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            01
+          </div>
+
+          <h2
+            id="usp1-title"
+            tabindex="0"
+          >
+            Eksamensfri
+          </h2>
+
+        </header>
+
+        <p
+          class="usp-text"
+          id="usp1-text"
+          tabindex="0"
+        >
+          Hos Arena X er der ingen traditionelle eksamener.
+          I stedet arbejder eleverne med projektbaseret læring
+          med fokus på samarbejde, praksis og fordybelse.
+        </p>
+
+        <ul
+          class="usp-tags"
+          aria-label="Nøgleord for Eksamensfri"
+        >
+
+          <li tabindex="0">Projekter</li>
+          <li tabindex="0">Fordybelse</li>
+          <li tabindex="0">Ingen prøver</li>
+
+        </ul>
+
+      </article>
+
+    </li>
+
+    <!-- ======================================
+    CARD 2
+    ======================================= -->
+
+    <li>
+
+      <article
+        class="usp-card reveal"
+        tabindex="0"
+        role="article"
+        aria-labelledby="usp2-title"
+        aria-describedby="usp2-text"
+        style="--idle-delay:.6s"
+      >
+
+        <header>
+
+          <div
+            class="usp-number"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            02
+          </div>
+
+          <h2
+            id="usp2-title"
+            tabindex="0"
+          >
+            Herningsholm-samarbejde
+          </h2>
+
+        </header>
+
+        <p
+          class="usp-text"
+          id="usp2-text"
+          tabindex="0"
+        >
+          Eleverne arbejder med virkelige cases og får erfaring
+          fra uddannelser og erhvervsliv allerede på efterskolen.
+        </p>
+
+        <ul
+          class="usp-tags"
+          aria-label="Nøgleord for Herningsholm-samarbejde"
+        >
+          <li tabindex="0">Erhverv</li>
+          <li tabindex="0">Karriere</li>
+          <li tabindex="0">Praksis</li>
+        </ul>
+
+      </article>
+
+    </li>
+
+    <!-- ======================================
+    CARD 3
+    ======================================= -->
+
+    <li>
+
+      <article
+        class="usp-card reveal"
+        tabindex="0"
+        role="article"
+        aria-labelledby="usp3-title"
+        aria-describedby="usp3-text"
+        style="--idle-delay:1s"
+      >
+
+        <header>
+
+          <div
+            class="usp-number"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            03
+          </div>
+
+          <h2
+            id="usp3-title"
+            tabindex="0"
+          >
+            Sport & Skills
+          </h2>
+
+        </header>
+
+        <p
+          class="usp-text"
+          id="usp3-text"
+          tabindex="0"
+        >
+          Arena X kombinerer sport, læring og personlig udvikling,
+          så eleverne styrker både talent og kompetencer.
+        </p>
+
+        <ul
+          class="usp-tags"
+          aria-label="Nøgleord for Sport og Skills"
+        >
+
+          <li tabindex="0">Sport</li>
+          <li tabindex="0">Talent</li>
+          <li tabindex="0">Kompetencer</li>
+
+        </ul>
+
+      </article>
+
+    </li>
+
+    <!-- ======================================
+    CARD 4
+    ======================================= -->
+
+    <li>
+
+      <article
+        class="usp-card reveal"
+        tabindex="0"
+        role="article"
+        aria-labelledby="usp4-title"
+        aria-describedby="usp4-text"
+        style="--idle-delay:1.4s"
+      >
+
+        <header>
+
+          <div
+            class="usp-number"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            04
+          </div>
+
+          <h2
+            id="usp4-title"
+            tabindex="0"
+          >
+            Familiegrupper
+          </h2>
+
+        </header>
+
+        <p
+          class="usp-text"
+          id="usp4-text"
+          tabindex="0"
+        >
+          Familiegrupperne styrker fællesskabet på tværs af årgange og linjer.
+          De skaber et trygt miljø, hvor eleverne hjælper hinanden i hverdagen.
+        </p>
+
+        <ul
+          class="usp-tags"
+          aria-label="Nøgleord for Familiegrupper"
+        >
+
+          <li tabindex="0">Fællesskab</li>
+          <li tabindex="0">Tryghed</li>
+          <li tabindex="0">Sammenhold</li>
+
+        </ul>
+
+      </article>
+
+    </li>
+
+    <!-- ======================================
+    CARD 5
+    ======================================= -->
+
+    <li>
+
+      <article
+        class="usp-card reveal"
+        tabindex="0"
+        role="article"
+        aria-labelledby="usp5-title"
+        aria-describedby="usp5-text"
+        style="--idle-delay:1.8s"
+      >
+
+        <header>
+
+          <div
+            class="usp-number"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            05
+          </div>
+
+          <h2
+            id="usp5-title"
+            tabindex="0"
+          >
+            Hele mennesket
+          </h2>
+
+        </header>
+
+        <p
+          class="usp-text"
+          id="usp5-text"
+          tabindex="0"
+        >
+          Arena X er rammen for unge, der vil mere end blot et skoleår.
+          Fokus er både faglig, personlig og social udvikling.
+        </p>
+
+        <ul
+          class="usp-tags"
+          aria-label="Nøgleord for Hele mennesket"
+        >
+
+          <li tabindex="0">Personlig udvikling</li>
+          <li tabindex="0">Sociale bånd</li>
+          <li tabindex="0">Fremtid</li>
+
+        </ul>
+
+      </article>
+
+    </li>
+
+  </ul>
+
+</section>
+
+<!-- ========================================================
+JAVASCRIPT
+======================================================== -->
+
+<script>
+
+/* ========================================================
+SCROLL REVEAL
+======================================================== */
+
+const revealObserver = new IntersectionObserver((entries) => {
+
+  entries.forEach(entry => {
+
+    if (!entry.isIntersecting) return;
+
+    const card = entry.target;
+
+    card.classList.add('visible');
+
+    const num = card.querySelector('.usp-number');
+
+    if (num) {
+
+      setTimeout(() => {
+        num.classList.add('popped');
+      }, 120);
+
+    }
+
+    revealObserver.unobserve(card);
+
+  });
+
+}, {
+  threshold:0.12
+});
+
+document.querySelectorAll('.reveal').forEach(el => {
+  revealObserver.observe(el);
+});
+
+/* ========================================================
+KEYBOARD INTERACTION
+======================================================== */
+
+document.querySelectorAll('.usp-card').forEach(card => {
+
+  card.addEventListener('keydown', e => {
+
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+
+    e.preventDefault();
+
+    card.style.transition = 'transform .1s ease';
+
+    card.style.transform = 'translateY(-3px) scale(0.98)';
+
+    setTimeout(() => {
+
+      card.style.transform = '';
+      card.style.transition = '';
+
+    }, 180);
+
+  });
+
+});
+
+/* ========================================================
+TAG RIPPLE EFFECT
+======================================================== */
+
+document.querySelectorAll('.usp-tags li').forEach(tag => {
+
+  function triggerRipple(){
+
+    tag.animate([
+      { transform:'scale(1)' },
+      { transform:'scale(1.1)' },
+      { transform:'scale(1)' }
+    ],{
+      duration:800
+    });
+
+  }
+
+  tag.addEventListener('click', triggerRipple);
+
+  tag.addEventListener('keydown', e => {
+
+    if (e.key === 'Enter' || e.key === ' ') {
+
+      e.preventDefault();
+
+      triggerRipple();
+
+    }
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>

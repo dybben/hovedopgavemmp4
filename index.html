@@ -1,373 +1,1132 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="da">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Min to-do app</title>
-    <style>
-      :root {
-        --bg: #f4f7fb;
-        --panel: #ffffff;
-        --panel-alt: #eef3ff;
-        --text: #1e293b;
-        --muted: #64748b;
-        --primary: #4f46e5;
-        --primary-dark: #3730a3;
-        --success: #22c55e;
-        --danger: #ef4444;
-        --border: #dfe7f5;
-        --shadow: 0 20px 45px rgba(79, 70, 229, 0.12);
-      }
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Arena X – efterskole for sport og skills i Herning. Et aktivt efterskoleår med sport, skills, fællesskab og personlig udvikling.">
+  <title>Arena X | 10. klasses efterskole i Herning – Besøg os </title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-      * {
-        box-sizing: border-box;
-      }
+  <!-- Font Awesome 6.5.2 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  
+  <link rel="stylesheet" href="/arena_x_css/arena_x_styles_index.css">
+  <link rel="stylesheet" href="/arena_x_css/arena_x_styles_navigation_index.css">
+  <link rel="stylesheet" href="/arena_x_css/arena_x_styles_font.css">
 
-      body {
-        margin: 0;
-        min-height: 100vh;
-        font-family: Arial, Helvetica, sans-serif;
-        background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%);
-        color: var(--text);
-        display: grid;
-        place-items: center;
-        padding: 24px;
-      }
+<style>
 
-      .app {
-        width: min(100%, 720px);
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        box-shadow: var(--shadow);
-        overflow: hidden;
-      }
+/* =========================================================
+ROOT
+========================================================= */
 
-      .topbar {
-        background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
-        color: white;
-        padding: 28px 26px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-      }
+:root {
+  --arena-x-bg: #1F2D23;
+  --arena-x-text: #FFFDBA;
+  --arena-x-accent: #ff6f42;
+  --arena-x-accent-light: #ffad42;
+  --arena-x-white: #FFFFFF;
+  --arena-x-cream: #F7F6F5;
+  --arena-x-card-bg: #253029;
+  --arena-x-muted: rgba(255,253,186,0.65);
+  --arena-x-focus-ring: #ff6f42;
+  --arena-x-radius: 20px;
 
-      .topbar h1 {
-        margin: 0;
-        font-size: clamp(1.5rem, 2vw, 2.1rem);
-      }
+  --arena-x-font-display: "Poppins", sans-serif;
+  --arena-x-font-body: "Poppins", sans-serif;
+}
 
-      .date {
-        font-size: 0.95rem;
-        opacity: 0.9;
-      }
+/* =========================================================
+RESET
+========================================================= */
 
-      .content {
-        padding: 26px;
-      }
+*{
+  box-sizing:border-box;
+}
 
-      .input-row {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 18px;
-      }
+body{
+  margin:0;
+  background:var(--arena-x-bg);
+  color:var(--arena-x-text);
+  font-family:var(--arena-x-font-body);
+  line-height:1.6;
+}
 
-      input[type="text"] {
-        flex: 1;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 14px 16px;
-        font-size: 1rem;
-        background: #fff;
-        color: var(--text);
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
-      }
+/* =========================================================
+ACCESSIBILITY
+========================================================= */
 
-      input[type="text"]:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
-      }
+.skip-link{
+  position:absolute;
+  left:-9999px;
+  top:0;
+}
 
-      button {
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: transform 0.15s ease, opacity 0.15s ease;
-      }
+.skip-link:focus{
+  left:20px;
+  top:20px;
+  background:var(--arena-x-cream);
+  color:#000;
+  padding:1rem;
+  z-index:9999;
+  border-radius:10px;
+}
 
-      button:hover {
-        transform: translateY(-1px);
-      }
 
-      button:active {
-        transform: translateY(0);
-      }
+.usp-section{
+  text-align:center;
+  margin-bottom:4rem;
+}
 
-      .add-btn {
-        background: var(--primary);
-        color: white;
-        padding: 14px 18px;
-        font-weight: bold;
-      }
+/* =========================================================
+HEADING
+========================================================= */
 
-      .add-btn:hover {
-        background: var(--primary-dark);
-      }
+.usp-heading{
+  text-align:center;
+  margin-bottom:4rem;
+}
 
-      .toolbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 12px;
-        gap: 12px;
-      }
+.usp-heading h1{
+  font-family:var(--arena-x-font-display);
+  color:var(--arena-x-text);
 
-      .count {
-        color: var(--muted);
-        font-weight: 600;
-      }
+}
 
-      .clear-btn {
-        background: #f8fafc;
-        color: var(--text);
-        border: 1px solid var(--border);
-        padding: 8px 12px;
-      }
+.usp-heading p{
+  max-width: 40rem;
+  margin:1rem auto 0;
+  font-size:1.325rem;
+  color:var(--arena-x-muted);
+}
 
-      ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: grid;
-        gap: 10px;
-      }
+/* =========================================================
+GRID
+========================================================= */
 
-      .todo-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        background: var(--panel-alt);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 12px 14px;
-      }
+.usp-grid{
+  display:grid;
+  gap:2rem;
+  max-width:1200px;
+  margin:0 auto;
+  list-style:none;
+  padding:0;
+}
 
-      .todo-item.done {
-        background: #ecfdf5;
-        border-color: #bbf7d0;
-      }
+@media(min-width:900px){
 
-      .todo-item.done .label {
-        text-decoration: line-through;
-        color: var(--muted);
-      }
+  .usp-grid{
+    grid-template-columns:repeat(6,1fr);
+  }
 
-      .checkbox {
-        width: 22px;
-        height: 22px;
-        border-radius: 8px;
-        border: 2px solid var(--primary);
-        background: white;
-        display: grid;
-        place-items: center;
-        color: white;
-        font-weight: bold;
-        flex-shrink: 0;
-      }
+  .usp-grid li:nth-child(1),
+  .usp-grid li:nth-child(2),
+  .usp-grid li:nth-child(3){
+    grid-column:span 2;
+  }
 
-      .todo-item.done .checkbox {
-        background: var(--success);
-        border-color: var(--success);
-      }
+  .usp-grid li:nth-child(4){
+    grid-column:2 / span 2;
+  }
 
-      .label {
-        flex: 1;
-        word-break: break-word;
-        font-size: 1rem;
-      }
+  .usp-grid li:nth-child(5){
+    grid-column:4 / span 2;
+  }
 
-      .delete-btn {
-        background: rgba(239, 68, 68, 0.08);
-        color: var(--danger);
-        min-width: 52px;
-        padding: 8px 10px;
-      }
+}
 
-      .empty-state {
-        padding: 22px 12px;
-        text-align: center;
-        color: var(--muted);
-        background: #f8fafc;
-        border: 1px dashed var(--border);
-        border-radius: 14px;
-      }
+/* =========================================================
+USP CARD
+========================================================= */
 
-      @media (max-width: 560px) {
-        .topbar,
-        .toolbar,
-        .input-row {
-          flex-direction: column;
-          align-items: stretch;
-        }
+.usp-card{
+  padding:2rem 1.75rem;
+  border:2px solid transparent;
+  border-radius:var(--arena-x-radius);
+  background:var(--arena-x-card-bg);
 
-        .topbar {
-          text-align: center;
-        }
+  cursor:default;
+  transition:
+    transform 0.35s cubic-bezier(.22, .68, 0, 1.2),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
 
-        .content {
-          padding: 18px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <main class="app">
-      <header class="topbar">
-        <h1>Min to-do liste</h1>
-        <div id="date" class="date">-</div>
-      </header>
+.usp-card:hover{
+  transform:translateY(-20px) scale(1.02);
+  border-color:var(--arena-x-focus-ring);
+}
 
-      <section class="content">
-        <form id="todo-form" autocomplete="off">
-          <div class="input-row">
-            <input
-              id="todo-input"
-              type="text"
-              maxlength="120"
-              placeholder="Skriv en opgave..."
-              aria-label="Ny opgave"
-            />
-            <button class="add-btn" type="submit">Tilføj</button>
-          </div>
-        </form>
 
-        <div class="toolbar">
-          <div id="count" class="count">0 tilbage</div>
-          <button id="clear-all" class="clear-btn" type="button">Ryd alle</button>
+/* =========================================================
+CARD HEADER
+========================================================= */
+
+.usp-card header{
+  display:flex;
+  align-items:flex-start;
+  gap:1rem;
+  margin-bottom:1.5rem;
+}
+
+/* =========================================================
+NUMBER BADGE
+========================================================= */
+
+.usp-number{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  flex-shrink:0;
+
+  min-width:50px;
+  height:50px;
+
+  margin-top:2px;
+
+  border-radius:10px;
+
+  background:var(--arena-x-accent);
+  color:#000;
+
+  font-family:var(--arena-x-font-display);
+  font-size:2rem;
+  line-height:1;
+}
+
+.usp-card:hover .usp-number{
+  background:var(--arena-x-accent-light);
+  transform:rotate(-10deg) scale(1.2);
+}
+
+/* =========================================================
+TITLE
+========================================================= */
+
+.usp-card h2,
+.usp-card h3{
+  margin:0;
+  color:var(--arena-x-text);
+  font-size:1.525rem;
+  font-family:var(--arena-x-font-display);
+}
+
+/* =========================================================
+TEXT
+========================================================= */
+
+.usp-text{
+  color:var(--arena-x-muted);
+  font-size:1.125rem;
+}
+
+.usp-card:hover .usp-text,
+.usp-card:focus .usp-text{
+  color:var(--arena-x-text);
+}
+
+/* =========================================================
+TAGS
+========================================================= */
+
+.usp-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.8rem;
+
+  list-style:none;
+
+  padding:0;
+  margin-top:1.5rem;
+}
+
+.usp-tags li{
+  background:var(--arena-x-accent);
+  color:var(--arena-x-bg);
+  padding:.45rem .9rem;
+  border-radius:999px;
+  font-size:1.125rem;
+}
+
+.usp-tags li:hover,
+.usp-tags li:focus{
+  background:var(--arena-x-accent-light);
+  transform:scale(1.05);
+}
+
+/* =========================================================
+SCROLL REVEAL
+========================================================= */
+
+.reveal{
+  opacity:0;
+  transform:translateY(80px);
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.usp-grid li:nth-child(1) article{
+  transition-delay:0.05s;
+}
+
+.usp-grid li:nth-child(2) article{
+  transition-delay:0.15s;
+}
+
+.usp-grid li:nth-child(3) article{
+  transition-delay:0.25s;
+}
+
+.usp-grid li:nth-child(4) article{
+  transition-delay:0.35s;
+}
+
+.usp-grid li:nth-child(5) article{
+  transition-delay: 0.45s;
+}
+
+/* =========================================================
+IDLE GLOW
+========================================================= */
+
+@keyframes arena-x-idle-glow {
+
+  0%,100%{
+    box-shadow:0 0 0 0 rgba(255,110,66,0.3);
+  }
+
+  50%{
+    box-shadow:0 0 0 5px rgba(255,111,66,0.12);
+  }
+
+}
+
+.usp-card.visible:not(:hover){
+  animation:arena-x-idle-glow 4s ease-in-out infinite;
+  animation-delay:var(--idle-delay, 0s);
+}
+
+
+</style>
+
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Spring til indhold</a>
+
+  <!-- =========================================================
+      ARENA X HEADER
+  ========================================================= -->
+
+  <header class="site-header" id="site-header">
+
+    <div class="header-inner">
+
+      <!-- LOGO -->
+      <a class="brand" href="#top" aria-label="Arena X – forsiden">
+        <img src="arena_x_assets/Arena_x´s_logo_Efterskole_Arena_Cream.png"
+            alt="Arena X – Efterskole for sport og skills"
+            class="brand-logo">
+      </a>
+
+      <!-- DESKTOP NAVIGATION -->
+      <nav class="desktop-nav" aria-label="Hovednavigation">
+        <ul class="nav-list">
+
+          <!-- SPORTSLINJE -->
+          <li class="nav-item has-dropdown">
+            <button type="button" class="nav-link dropdown-toggle" aria-expanded="false">
+              <span>Sportslinje</span>
+              <i class="fa-solid fa-chevron-down dropdown-arrow" aria-hidden="true"></i>
+            </button>
+
+            <ul class="dropdown-menu">
+              <!-- <li><a href="Sportslinje/atletik.html">Atletik / Løb (mangler) </a></li>  -->
+               <!-- <li><a href="Sportslinje/badminton.html">Badminton (mangler)</a></li> --> 
+              <li><a href="Sportslinje/boksning.html">Boksning</a></li>
+              <li><a href="Sportslinje/brydning.html">Brydning</a></li>
+               <!-- <li><a href="Sportslinje/fodbold.html">Fodbold (mangler) </a></li> -->
+               <!-- <li><a href="Sportslinje/floorball.html">Floorball (mangler) </a></li> -->
+              <li><a href="sportslinje/gymnastik.html">Fælles gymnastik</a></li>
+               <!-- <li><a href="Sportslinje/haandbold.html">Håndbold (mangler) </a></li> -->
+              <li><a href="Sportslinje/ishockey.html">Ishockey </a></li>
+              <li><a href="Sportslinje/kunstskoejteloeb.html">Kunstskøjteløb </a></li>
+              <li><a href="Sportslinje/padel.html">Padel  </a></li>
+              <li><a href="Sportslinje/skydning.html">Skydning  </a></li>
+               <!-- <li><a href="Sportslinje/svoemning.html">Svømning (mangler) </a></li> -->
+            </ul>
+          </li>
+
+          <!-- SKILLS -->
+          <li class="nav-item has-dropdown">
+            <button type="button" class="nav-link dropdown-toggle" aria-expanded="false">
+              <span>Skills på Arena X</span>
+              <i class="fa-solid fa-chevron-down dropdown-arrow" aria-hidden="true"></i>
+            </button>
+
+            <ul class="dropdown-menu">
+              <li><a href="skills/det_faglige.html">Det Faglige</a></li>
+              <li><a href="skills/skillspaaarenax.html">Skills på Arena X</a></li>
+              <!-- <li> <a href="/skills/erhvervssamarbejder.html">Erhvervssamarbejder</a> </li> -->
+              <!-- <li> <a href="/skills/fag-og-undervisning.html">Fag og undervisning</a> </li> -->
+            </ul>
+          </li>
+
+          <!-- EFTERSKOLELIVET -->
+          <li class="nav-item has-dropdown">
+            <button type="button" class="nav-link dropdown-toggle" aria-expanded="false">
+              <span>Efterskolelivet</span>
+              <i class="fa-solid fa-chevron-down dropdown-arrow" aria-hidden="true"></i>
+            </button>
+
+            <ul class="dropdown-menu">
+
+              <li><a href="/efterskolelivet/hverdagen.html">Hverdagen på Arena X</a></li>
+              <!-- <li><a href="/efterskolelivet/faellesskab.html">Fællesskab</a></li>   -->
+              <li><a href="/efterskolelivet/rejser.html">Rejser</a></li>
+              <!--  <li><a href="/efterskolelivet/aktiviteter.html">Aktiviteter</a></li> -->
+
+              <li><a href="/efterskolelivet/kost.html">Kost</a></li>
+              <li><a href="/efterskolelivet/antimobbestrategi.html">Antimobbestrategi</a></li>
+
+            </ul>
+          </li>
+
+          <!-- OM EFTERSKOLEN -->
+          <li class="nav-item has-dropdown">
+            <button type="button" class="nav-link dropdown-toggle" aria-expanded="false">
+              <span>Om Efterskolen</span>
+              <i class="fa-solid fa-chevron-down dropdown-arrow" aria-hidden="true"></i>
+            </button>
+
+            <ul class="dropdown-menu">
+              
+              <li><a href="om_efterskolen/hvad_er_arena_x.html">Hvad er Arena X?</a></li>
+              <li><a href="om_efterskolen/personale.html">Personale</a></li>
+              <li><a href="om_efterskolen/bestyrelsen.html">Bestyrelsen</a></li>
+              <li><a href="om_efterskolen/historie.html">Vores historie</a></li>
+              <li><a href="om_efterskolen/vaerdigrundlag.html">Værdigrundlag</a></li>
+              <li><a href="om_efterskolen/faciliteter.html">Faciliteter</a></li>
+              <li><a href="om_efterskolen/foraeldreinformation.html" > Forældreinformation </a></li>
+              <li><a href="om_efterskolen/inklusion.html"> Inklusion & specialundervisning </a></li>
+
+            </ul>
+          </li>
+
+          <!-- CTA -->
+          <li class="nav-item">
+            <a href="/page-bliv-elev-pa-arena-x.php" class="nav-link nav-cta">
+              Bliv elev på Arena X
+            </a>
+          </li>
+
+          <!-- KONTAKT -->
+          <li class="nav-item">
+            <a href="kontakt.html" class="nav-link nav-contact"> Kontakt </a>
+          </li>
+
+        </ul>
+      </nav>
+
+      <!-- MOBILE MENU BUTTON -->
+      <button type="button"
+              class="menu-open"
+              id="menu-open"
+              aria-label="Åbn menu"
+              aria-expanded="false"
+              aria-controls="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+    <!-- =======================================================
+        MOBILE MENU
+    ======================================================== -->
+
+    <div class="mobile-menu" id="mobile-menu" hidden>
+
+      <div class="mobile-menu-header">
+        <span class="mobile-menu-title">Menu</span>
+
+        <button type="button"
+                class="menu-close"
+                id="menu-close"
+                aria-label="Luk menu">
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <nav class="mobile-nav" aria-label="Mobilnavigation">
+
+        <!-- SPORTSLINJE -->
+        <div class="mobile-nav-item">
+          <button type="button"
+                  class="mobile-nav-link mobile-dropdown-toggle"
+                  aria-expanded="false">
+            <span>Sportslinje</span>
+            <i class="fa-solid fa-chevron-down mobile-dropdown-arrow" aria-hidden="true"></i>
+          </button>
+
+          <ul class="mobile-dropdown">
+            <!-- <li><a href="Sportslinje/atletik.html">Atletik / Løb</a></li> -->
+            <!-- <li><a href="Sportslinje/badminton.html">Badminton</a></li> -->
+            <li><a href="Sportslinje/boksning.html">Boksning</a></li>
+            <li><a href="Sportslinje/brydning.html">Brydning</a></li>
+            <li><a href="Sportslinje/fodbold.html">Fodbold</a></li>
+           <!-- <li><a href="Sportslinje/floorball.html">Floorball</a></li> -->
+            <li><a href="sportslinje/gymnastik.html">Fælles gymnastik</a></li>
+            <li><a href="Sportslinje/haandbold.html">Håndbold</a></li>
+            <li><a href="Sportslinje/ishockey.html">Ishockey</a></li>
+            <li><a href="Sportslinje/kunstskøjteløb.html">Kunstskøjteløb</a></li>
+            <li><a href="Sportslinje/padel.html">Padel</a></li>
+            <li><a href="Sportslinje/skydning.html">Skydning</a></li>
+           <!-- <li><a href="Sportslinje/svoemning.html">Svømning</a></li> -->
+          </ul>
         </div>
 
-        <ul id="todo-list" aria-live="polite"></ul>
-      </section>
-    </main>
+        <!-- SKILLS -->
+        <div class="mobile-nav-item">
+          <button type="button"
+                  class="mobile-nav-link mobile-dropdown-toggle"
+                  aria-expanded="false">
+            <span>Skills på Arena X</span>
+            <i class="fa-solid fa-chevron-down mobile-dropdown-arrow" aria-hidden="true"></i>
+          </button>
 
-    <script>
-      const form = document.getElementById('todo-form');
-      const input = document.getElementById('todo-input');
-      const list = document.getElementById('todo-list');
-      const count = document.getElementById('count');
-      const clearAllBtn = document.getElementById('clear-all');
-      const dateEl = document.getElementById('date');
+          <ul class="mobile-dropdown">
+            <li><a href="skills/det_faglige.html">Det Faglige</a></li>
+            <li><a href="skills/skillspaaarenax.html">Skills på Arena X</a></li>
+            <!-- <li><a href="skills/erhvervssamarbejder.html">Erhvervssamarbejder</a></li> -->
+            <!--  <li><a href="skills/fag-og-undervisning.html">Fag og undervisning</a></li> -->
+          </ul>
+        </div>
 
-      const STORAGE_KEY = 'todo-list-v1';
-      let todos = loadTodos();
+        <!-- EFTERSKOLELIVET -->
+        <div class="mobile-nav-item">
+          <button type="button"
+                  class="mobile-nav-link mobile-dropdown-toggle"
+                  aria-expanded="false">
+            <span>Efterskolelivet</span>
+            <i class="fa-solid fa-chevron-down mobile-dropdown-arrow" aria-hidden="true"></i>
+          </button>
 
-      function loadTodos() {
-        try {
-          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-          return Array.isArray(saved) ? saved : [];
-        } catch {
-          return [];
-        }
-      }
+          <ul class="mobile-dropdown">
+            <li><a href="efterskolelivet/hverdagen.html">Hverdagen på Arena X</a></li>
+            <li><a href="efterskolelivet/faellesskab.html">Fællesskab</a></li>
+            <li><a href="efterskolelivet/rejser.html">Rejser</a></li>
+            <li><a href="efterskolelivet/aktiviteter.html">Aktiviteter</a></li>
+            <li><a href="efterskolelivet/faciliteter.html">Faciliteter</a></li>
+          </ul>
+        </div>
 
-      function saveTodos() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
-      }
+        <!-- OM EFTERSKOLEN -->
+        <div class="mobile-nav-item">
+          <button type="button" class="mobile-nav-link mobile-dropdown-toggle" aria-expanded="false">
+            <span>Om Efterskolen</span>
+            <i class="fa-solid fa-chevron-down mobile-dropdown-arrow" aria-hidden="true"></i>
+          </button>
 
-      function renderDate() {
-        const now = new Date();
-        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-        dateEl.textContent = now.toLocaleDateString('da-DK', options);
-      }
+          <ul class="mobile-dropdown">
+            <li><a href="om/hvad_er_arena_x.html">Hvad er Arena X?</a></li>
+            <li><a href="om/personale.html">Personale</a></li>
+            <li><a href="om/bestyrelsen.html">Bestyrelsen</a></li>
+            <li><a href="om/historie.html">Vores historie</a></li>
+            <li><a href="om/vaerdigrundlag.html">Værdigrundlag</a></li>
+            <li><a href="om/faciliteter.html">Faciliteter</a></li>
+          </ul>
+        </div>
 
-      function render() {
-        list.innerHTML = '';
+        <a href="/page-bliv-elev-pa-arena-x.php" class="mobile-nav-link mobile-direct"> Bliv elev på Arena  </a>
+        <a href="kontakt.html" class="mobile-nav-link mobile-direct"> Kontakt </a>
 
-        if (todos.length === 0) {
-          const empty = document.createElement('li');
-          empty.className = 'empty-state';
-          empty.textContent = 'Ingen opgaver endnu. Tilføj din første opgave!';
-          list.appendChild(empty);
-        } else {
-          todos.forEach((todo) => {
-            const item = document.createElement('li');
-            item.className = `todo-item ${todo.done ? 'done' : ''}`;
+      </nav>
+    </div>
 
-            const checkbox = document.createElement('button');
-            checkbox.type = 'button';
-            checkbox.className = 'checkbox';
-            checkbox.setAttribute('aria-label', todo.done ? 'Markér som ikke færdig' : 'Markér som færdig');
-            checkbox.textContent = todo.done ? '✓' : '';
+  </header>
 
-            const label = document.createElement('span');
-            label.className = 'label';
-            label.textContent = todo.text;
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      
+      <video
+        class="hero-video"
+        id="hero-video" autoplay muted loop playsinline preload="metadata" poster="arena_x_assets/Arena-X-Efterskolen-for-sport-og-skills-i-Herning.mp4" aria-hidden="true">
+        
+        <!-- Midlertidig ekstern MP4-reference. Erstat senere med assets/arena-x-hero.mp4 -->
+        <source src="arena_x_assets/Arena-X-Efterskolen-for-sport-og-skills-i-Herning.mp4" type="video/mp4">
 
-            const deleteBtn = document.createElement('button');
-            deleteBtn.type = 'button';
-            deleteBtn.className = 'delete-btn';
-            deleteBtn.textContent = 'Slet';
-            deleteBtn.setAttribute('aria-label', `Slet opgave: ${todo.text}`);
+      </video>
 
-            checkbox.addEventListener('click', () => {
-              todo.done = !todo.done;
-              saveTodos();
-              render();
-            });
+      <div class="hero-overlay" aria-hidden="true"></div>
 
-            deleteBtn.addEventListener('click', () => {
-              todos = todos.filter((item) => item.id !== todo.id);
-              saveTodos();
-              render();
-            });
+      <div class="hero-content">
+        <h1 id="hero-title">Sæt dig i spil på ARENA X</h1>
+        <h2> Fløj din fremtid i gang på Danmarks nye 10. klasses efterskole. </h2>
+        <a class="button button-light" href="page-bliv-elev-pa-arena-x.php">Tilmeld dig til efterskolen </a>
+      </div>
 
-            item.appendChild(checkbox);
-            item.appendChild(label);
-            item.appendChild(deleteBtn);
-            list.appendChild(item);
-          });
-        }
+      <button class="video-control" id="video-control" type="button" aria-label="Sæt video på pause" title="Pause video">
+        <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14M17 5v14"/></svg>
+        <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7z"/></svg>
+      </button>
+    </section>
 
-        const remaining = todos.filter((todo) => !todo.done).length;
-        count.textContent = `${remaining} tilbage`;
-      }
+    <section class="intro section-dark" aria-labelledby="intro-title">
+      <div class="container intro-inner">
+        <h2 id="intro-title">Efterskolen for sport og skills</h2>
+        <p>Arena X åbner i august 2026 som en alternativ 10. klasses efterskole i Herning.</p>
+        <p>Her handler det ikke kun om, hvad du lærer – men om, hvad du kan bruge det til.</p>
+        <p> Du får et år, hvor sport, faglighed og efterskoleliv hænger sammen, og hvor du får redskaber til at finde ud af, hvem du er, hvad du kan og hvor du vil hen. </p>
+      </div>
+    </section>
 
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
+    <section class="story" id="sport" aria-label="Arena X – sport, skills og efterskoleliv">
+      <div class="container story-grid">
 
-        const text = input.value.trim();
-        if (!text) {
-          input.focus();
-          return;
-        }
+        <article class="story-row">
+          <div class="story-image">
+            <img
+              src="arena_x_assets/billeder_af_fodboldspiller.webp"
+              alt="Fodboldspiller i aktion på en grøn fodboldbane"
+              loading="lazy">
+          </div>
+          <div class="story-copy">
+            <h2>Få træning i stærke klubmiljøer</h2>
+            
+            <p>
+              På Arena X kombinerer du efterskolelivet med træning i den sportsgren, du brænder for. 
+              Du træner i nogle af Hernings stærkeste klubber, hvor du bliver en del af deres miljø og får kvalificeret træning.
+            </p>
+            
+            <p>
+              Uanset om du spiller fodbold, dyrker atletik, svømmer, bokser eller noget helt femte,
+              hjælper vi dig med at tilpasse træningen til dit ambitionsniveau og din hverdag.
+            </p>
 
-        todos.unshift({
-          id: Date.now(),
-          text,
-          done: false,
-        });
+            <a class="button button-dark" href="sportengrene.html"> Læs mere om sporten </a>
 
-        input.value = '';
-        input.focus();
-        saveTodos();
-        render();
-      });
+          </div>
+        </article>
 
-      clearAllBtn.addEventListener('click', () => {
-        if (todos.length === 0) return;
+        <article class="story-row story-row-reverse" id="skills">
+          <div class="story-image">
+            <img
+              src="arena_x_assets/skills_til_livet.jpg"
+              alt="Ung person arbejder kreativt med ler i et værksted"
+              loading="lazy">
+          </div>
+          <div class="story-copy">
+            <h2>Skills til livet</h2>
+            <p>På Arena X kan du sætte dine skills i spil inden for mere end 40 forskellige erhvervsretninger.</p>
+            <p>Du kan afprøve dine færdigheder eller dygtiggøre dig inden for et felt. Vi samarbejder med Herningsholm Erhvervsskole og lokale virksomheder, som giver dig de bedste forudsætninger for at prøve dine skills af i det virkelige liv.</p>
+            <p>Det betyder, at du får praktisk erfaring, som giver mening for fremtiden – og som hjælper dig med at finde din egen vej.</p>
+            <a class="button button-dark" href="/skills/skillspaaarenax.html">Skills på Arena X</a>
+          </div>
+        </article>
 
-        const confirmDelete = window.confirm('Er du sikker på, at du vil slette alle opgaver?');
-        if (!confirmDelete) return;
+        <article class="story-row" id="efterskolelivet">
+          <div class="story-image">
+            <img
+              src="arena_x_assets/Stemningsbillede_2.webp"
+              alt="Venner slapper af sammen i et hyggeligt værelse"
+              loading="lazy">
+          </div>
+          <div class="story-copy">
+            <h2>Et efterskoleår, du aldrig glemmer</h2>
+            <p>Et år på Arena X er mere end undervisning og sport. Du bor sammen med andre unge, deler ansvar og oplevelser og bliver en del af et stærkt fællesskab, hvor man vil noget – og vil hinanden.</p>
+            <p>Her er plads til grin, mål, samtaler og venskaber, der varer langt ud over efterskoletiden.</p>
+          </div>
+        </article>
 
-        todos = [];
-        saveTodos();
-        render();
-      });
+        <article class="story-row story-row-reverse">
+          <div class="story-image">
+            <img
+              src="arena_x_assets/aabning_af_arena_x.jpg"
+              alt="Unge mennesker har det sjovt sammen til en social aktivitet"
+              loading="lazy">
+          </div>
+          <div class="story-copy">
+            <h2>Hele Hernings nye efterskole</h2>
+            <p>Arena X er skabt i et stærkt samarbejde mellem Herning Kommune og byens forenings- og erhvervsliv. Ambitionen er at skabe fremtidens 10. klasses efterskole, som samler hele byen, så du kan prøve dine talenter af inden for både sport og håndværk.</p>
+            <a class="button button-dark" href="/om_efterskolen.html">Hvem er vi?</a>
+          </div>
+        </article>
 
-      renderDate();
-      render();
-    </script>
-  </body>
+      </div>
+    </section>
+
+    </section>
+
+    <section
+  class="usp-section"
+  aria-labelledby="usp-heading"
+>
+
+  <!-- ======================================
+  HEADING
+  ======================================= -->
+
+  <div class="usp-heading">
+
+    <h1
+      id="usp-heading"
+      tabindex="0"
+    >
+      Arena X USP'er
+    </h1>
+
+    <p tabindex="0">
+      Oplev hvad der gør Arena X anderledes med fokus på
+      fællesskab, praksis, sport og personlig udvikling.
+    </p>
+
+  </div>
+
+  <!-- ======================================
+  GRID
+  ======================================= -->
+
+  <ul
+    class="usp-grid"
+    id="usp-main"
+    role="list"
+  >
+
+    <!-- ======================================
+    CARD 1
+    ======================================= -->
+
+    <li>
+
+      <article
+        class="usp-card reveal"
+        tabindex="0"
+        role="article"
+        aria-labelledby="usp1-title"
+        aria-describedby="usp1-text"
+        style="--idle-delay:.2s"
+      >
+
+        <header>
+
+          <div
+            class="usp-number"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            01
+          </div>
+
+          <h2
+            id="usp1-title"
+            tabindex="0"
+          >
+            Eksamensfri
+          </h2>
+
+        </header>
+
+        <p
+          class="usp-text"
+          id="usp1-text"
+          tabindex="0"
+        >
+          Hos Arena X er der ingen traditionelle eksamener.
+          I stedet arbejder eleverne med projektbaseret læring
+          med fokus på samarbejde, praksis og fordybelse.
+        </p>
+
+        <ul
+          class="usp-tags"
+          aria-label="Nøgleord for Eksamensfri"
+        >
+
+          <li tabindex="0">Projekter</li>
+          <li tabindex="0">Fordybelse</li>
+          <li tabindex="0">Ingen prøver</li>
+
+        </ul>
+
+      </article>
+
+    </li>
+
+    <!-- ======================================
+    CARD 2
+    ======================================= -->
+
+    <li>
+
+      <article
+        class="usp-card reveal"
+        tabindex="0"
+        role="article"
+        aria-labelledby="usp2-title"
+        aria-describedby="usp2-text"
+        style="--idle-delay:.6s"
+      >
+
+        <header>
+
+          <div
+            class="usp-number"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            02
+          </div>
+
+          <h2
+            id="usp2-title"
+            tabindex="0"
+          >
+            Herningsholm-samarbejde
+          </h2>
+
+        </header>
+
+        <p
+          class="usp-text"
+          id="usp2-text"
+          tabindex="0"
+        >
+          Eleverne arbejder med virkelige cases og får erfaring
+          fra uddannelser og erhvervsliv allerede på efterskolen.
+        </p>
+
+        <ul
+          class="usp-tags"
+          aria-label="Nøgleord for Herningsholm-samarbejde"
+        >
+          <li tabindex="0">Erhverv</li>
+          <li tabindex="0">Karriere</li>
+          <li tabindex="0">Praksis</li>
+        </ul>
+
+      </article>
+
+    </li>
+
+    <!-- ======================================
+    CARD 3
+    ======================================= -->
+
+    <li>
+
+      <article
+        class="usp-card reveal"
+        tabindex="0"
+        role="article"
+        aria-labelledby="usp3-title"
+        aria-describedby="usp3-text"
+        style="--idle-delay:1s"
+      >
+
+        <header>
+
+          <div
+            class="usp-number"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            03
+          </div>
+
+          <h2
+            id="usp3-title"
+            tabindex="0"
+          >
+            Sport & Skills
+          </h2>
+
+        </header>
+
+        <p
+          class="usp-text"
+          id="usp3-text"
+          tabindex="0"
+        >
+          Arena X kombinerer sport, læring og personlig udvikling,
+          så eleverne styrker både talent og kompetencer.
+        </p>
+
+        <ul
+          class="usp-tags"
+          aria-label="Nøgleord for Sport og Skills"
+        >
+
+          <li tabindex="0">Sport</li>
+          <li tabindex="0">Talent</li>
+          <li tabindex="0">Kompetencer</li>
+
+        </ul>
+
+      </article>
+
+    </li>
+
+    <!-- ======================================
+    CARD 4
+    ======================================= -->
+
+    <li>
+
+      <article
+        class="usp-card reveal"
+        tabindex="0"
+        role="article"
+        aria-labelledby="usp4-title"
+        aria-describedby="usp4-text"
+        style="--idle-delay:1.4s"
+      >
+
+        <header>
+
+          <div
+            class="usp-number"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            04
+          </div>
+
+          <h2
+            id="usp4-title"
+            tabindex="0"
+          >
+            Familiegrupper
+          </h2>
+
+        </header>
+
+        <p
+          class="usp-text"
+          id="usp4-text"
+          tabindex="0"
+        >
+          Familiegrupperne styrker fællesskabet på tværs af årgange og linjer.
+          De skaber et trygt miljø, hvor eleverne hjælper hinanden i hverdagen.
+        </p>
+
+        <ul
+          class="usp-tags"
+          aria-label="Nøgleord for Familiegrupper"
+        >
+
+          <li tabindex="0">Fællesskab</li>
+          <li tabindex="0">Tryghed</li>
+          <li tabindex="0">Sammenhold</li>
+
+        </ul>
+
+      </article>
+
+    </li>
+
+    <!-- ======================================
+    CARD 5
+    ======================================= -->
+
+    <li>
+
+      <article
+        class="usp-card reveal"
+        tabindex="0"
+        role="article"
+        aria-labelledby="usp5-title"
+        aria-describedby="usp5-text"
+        style="--idle-delay:1.8s"
+      >
+
+        <header>
+
+          <div
+            class="usp-number"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            05
+          </div>
+
+          <h2
+            id="usp5-title"
+            tabindex="0"
+          >
+            Hele mennesket
+          </h2>
+
+        </header>
+
+        <p
+          class="usp-text"
+          id="usp5-text"
+          tabindex="0"
+        >
+          Arena X er rammen for unge, der vil mere end blot et skoleår.
+          Fokus er både faglig, personlig og social udvikling.
+        </p>
+
+        <ul
+          class="usp-tags"
+          aria-label="Nøgleord for Hele mennesket"
+        >
+
+          <li tabindex="0">Personlig udvikling</li>
+          <li tabindex="0">Sociale bånd</li>
+          <li tabindex="0">Fremtid</li>
+
+        </ul>
+
+      </article>
+
+    </li>
+
+  </ul>
+
+</section>
+
+    <section class="address" id="adresse" aria-labelledby="address-title">
+      <div class="container">
+        <h2 id="address-title">Adressen</h2>
+        <p class="address-name">Arena X – efterskolen for sport og skills</p>
+        <p>Holingknuden 2, 7400 Herning</p>
+        <div class="map-frame" role="img" aria-label="Kort over Arena X i Herning">
+          <iframe
+            title="Kort over Arena X, Holingknuden 2, 7400 Herning"
+            loading="lazy"
+            src="https://www.google.com/maps?q=Holingknuden%202,%207400%20Herning&output=embed"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- =========================================================
+    ARENA X FOOTER BRAND
+  ========================================================= -->
+
+    <div id="footer"></div>
+
+  <!-- =======================================================
+  JAVASCRIPT
+  ======================================================= -->
+  <script src="arena_x_js/arena_x_main.js" defer></script>
+  <script src="arena_x_js/arena_x_dropdown.js" defer></script>
+  <script src="/arena_x_footer/arena_x_footer.js"></script>
+
+<!-- ========================================================
+JAVASCRIPT
+======================================================== -->
+
+<script>
+
+/* ========================================================
+SCROLL REVEAL
+======================================================== */
+
+const revealObserver = new IntersectionObserver((entries) => {
+
+  entries.forEach(entry => {
+
+    if (!entry.isIntersecting) return;
+
+    const card = entry.target;
+
+    card.classList.add('visible');
+
+    const num = card.querySelector('.usp-number');
+
+    if (num) {
+
+      setTimeout(() => {
+        num.classList.add('popped');
+      }, 120);
+
+    }
+
+    revealObserver.unobserve(card);
+
+  });
+
+}, {
+  threshold:0.12
+});
+
+document.querySelectorAll('.reveal').forEach(el => {
+  revealObserver.observe(el);
+});
+
+/* ========================================================
+KEYBOARD INTERACTION
+======================================================== */
+
+document.querySelectorAll('.usp-card').forEach(card => {
+
+  card.addEventListener('keydown', e => {
+
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+
+    e.preventDefault();
+
+    card.style.transition = 'transform .1s ease';
+
+    card.style.transform = 'translateY(-3px) scale(0.98)';
+
+    setTimeout(() => {
+
+      card.style.transform = '';
+      card.style.transition = '';
+
+    }, 180);
+
+  });
+
+});
+
+/* ========================================================
+TAG RIPPLE EFFECT
+======================================================== */
+
+document.querySelectorAll('.usp-tags li').forEach(tag => {
+
+  function triggerRipple(){
+
+    tag.animate([
+      { transform:'scale(1)' },
+      { transform:'scale(1.1)' },
+      { transform:'scale(1)' }
+    ],{
+      duration:800
+    });
+
+  }
+
+  tag.addEventListener('click', triggerRipple);
+
+  tag.addEventListener('keydown', e => {
+
+    if (e.key === 'Enter' || e.key === ' ') {
+
+      e.preventDefault();
+
+      triggerRipple();
+
+    }
+
+  });
+
+});
+
+</script>
+
+
+</body>
 </html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kontakt | Arena X</title>
+<meta name="description" content="Kontakt Arena X i Herning. Find telefon, e-mail, adresse og kontaktoplysninger.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="/css/undersider.css">
+
+<style>
+:root{
+--arena-dark-deep:#17221b;
+--arena-white:#fff;
+--arena-cream:#f7f6f5;
+--arena-orange:#FF6F42;
+--arena-orange-light:#fff3e5;
+--arena-yellow:#FFFDBA;
+--arena-yellow-strong:#fff08a;
+--arena-green-light:#eaf1ed;
+--arena-green:#1B4129;
+--arena-green-dark:#173f32;
+--arena-text:#173f32;
+--arena-blue:#A1D2E7;
+--arena-black:#000;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+margin:0;
+background:var(--arena-white);
+color:var(--arena-text);
+font-family:Arial,Helvetica,sans-serif;
+line-height:1.5;
+}
+a{color:inherit}
+.container{width:min(1180px,calc(100% - 48px));margin:auto}
+
+/* Breadcrumbs */
+.breadcrumbs{padding:24px 0}
+.breadcrumbs ol{
+display:flex;align-items:center;gap:10px;
+margin:0;padding:0;list-style:none;
+font-size:14px;color:var(--arena-muted)
+}
+.breadcrumbs a{
+display:flex;align-items:center;gap:7px;
+text-decoration:none;font-weight:700
+}
+.breadcrumbs a:hover{color:var(--arena-orange)}
+.breadcrumbs i{font-size:11px}
+
+/* Header */
+.page-header{padding:30px 0 48px ; margin-bottom: 20px; }
+.eyebrow{
+margin:0 0 10px;
+color:var(--arena-orange);
+font-size:13px;font-weight:800;
+text-transform:uppercase;letter-spacing:.08em
+}
+
+h1{
+margin:0;
+color:var(--arena-dark-deep);
+font-size:clamp(42px,6vw,72px);
+line-height:.95;
+letter-spacing:-.04em;
+text-transform:lowercase
+}
+
+/* Contact */
+.contact{
+display:grid;
+grid-template-columns:1.1fr .9fr;
+gap:24px;
+padding-bottom:80px
+}
+
+.card{
+padding:34px;
+border:1px solid var(--arena-border);
+border-radius:24px;
+background:var(--arena-white);
+box-shadow:0 10px 35px rgba(23,34,27,.06)
+}
+
+.card.dark{
+background:var(--arena-green);
+border-color:var(--arena-yellow);
+color:var(--arena-white)
+}
+
+.icon{
+display:grid;place-items:center;
+width:52px;height:52px;
+margin-bottom:20px;
+border-radius:14px;
+background:var(--arena-orange);
+color:var(--arena-white)
+}
+
+.card h2{
+margin:0 0 8px;
+font-size: 34px;
+line-height:1.1;
+color:var(--arena-dark-deep)
+}
+
+.dark h2{color:var(--arena-white)}
+.text{margin:0 0 22px;color:var(--arena-muted)}
+.dark .text{color:var(--arena-white);}
+
+/* Contact items */
+.contact-list{display:grid;gap:12px}
+.contact-item{
+display:flex;align-items:center;gap:14px;
+padding:14px;
+border-radius:14px;
+background:var(--arena-white);
+color:var(--arena-dark-deep)
+}
+
+.contact-item i{
+display:grid;place-items:center;
+flex:0 0 40px;width:40px;height:40px;
+border-radius:10px;
+background:var(--arena-orange-light);
+color:var(--arena-orange)
+}
+
+.contact-item small{
+display:block;
+margin-bottom:2px;
+color:var(--arena-muted);
+font-size:11px;
+font-weight:800;
+text-transform:uppercase
+}
+
+.contact-item a{
+font-weight:700;
+text-decoration:none;
+overflow-wrap:anywhere
+}
+
+.contact-item a:hover{color:var(--arena-orange)}
+
+/* Forstander */
+.person{
+display:flex;gap:14px;
+margin-top:24px;padding-top:24px;
+border-top:1px solid var(--arena-border-light)
+}
+.person i{
+display:grid;place-items:center;
+flex:0 0 46px;width:46px;height:46px;
+border-radius:50%;
+background:var(--arena-orange);
+color:var(--arena-white)
+}
+
+.person strong{display:block;font-size:21px;margin:2px 0 5px}
+.person a{text-decoration:none;display:block;opacity:.85}
+.person a:hover{color:var(--arena-orange);opacity:1}
+
+/* Info  
+    .info{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:22px
+    }
+*/
+
+.info-box{
+padding:24px;
+border-radius:20px;
+background:var(--arena-green-light)
+}
+
+.info-box.bank{background:var(--arena-yellow)}
+.info-box h3{
+margin:0 0 14px;
+font-size:19px;
+color:var(--arena-dark-deep)
+}
+
+.info-box h3 i{color:var(--arena-orange);margin-right:7px}
+address{font-style:normal;line-height:1.7}
+address strong{display:block;font-size:17px}
+
+.map{
+display:inline-flex;
+align-items:center;gap:7px;
+margin-top:14px;
+font-size:13px;
+font-weight:800;
+text-decoration:none
+}
+
+.map:hover{color:var(--arena-orange)}
+.bank-row{
+display:flex;
+justify-content:space-between;
+gap:12px;
+padding:8px 0;
+border-bottom:1px solid rgba(23,34,27,.12)
+}
+
+.bank-row:last-child{border:0}
+.bank-row span{color:var(--arena-muted);font-size:14px}
+.bank-row strong{font-size:14px;text-align:right}
+
+/* CTA */
+.cta{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:24px;
+margin-top:24px;
+margin-bottom: 4rem;
+padding:30px 34px;
+border-radius:24px;
+background:var(--arena-orange-light)
+}
+
+.cta h2{margin:0 0 5px;color:var(--arena-dark-deep);font-size:26px}
+.cta p{margin:0;color:var(--arena-muted)}
+.cta a{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:9px;
+padding:14px 22px;
+border-radius:999px;
+background:var(--arena-dark-deep);
+color:var(--arena-white);
+font-weight:800;
+text-decoration:none;
+white-space:nowrap
+}
+.cta a:hover{background:var(--arena-green)}
+
+/* RWD */
+@media(max-width:900px){
+.container{width:min(720px,calc(100% - 40px))}
+.contact{grid-template-columns:1fr}
+}
+
+@media(max-width:600px){
+.container{width:calc(100% - 28px)}
+.breadcrumbs{padding:18px 0}
+.page-header{padding:20px 0 36px}
+.intro{font-size:16px}
+.card{padding:24px 20px;border-radius:20px}
+.info{grid-template-columns:1fr}
+.cta{align-items:stretch;flex-direction:column;padding:26px 20px}
+.cta a{width:100%}
+}
+
+@media(max-width:360px){
+.container{width:calc(100% - 20px)}
+.page-header{padding-bottom:30px}
+h1{font-size:42px}
+.intro{font-size:15px}
+.card{padding:20px 15px}
+.card h2{font-size:24px}
+.contact-item{padding:11px}
+.contact-item i{flex-basis:36px;width:36px;height:36px}
+.contact-item a{font-size:14px}
+.info-box{padding:20px 15px}
+.cta{padding:22px 15px; margin-bottom: 4rem;}
+.cta h2{font-size:23px}
+}
+</style>
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<main>
+<div class="container">
+
+<nav class="breadcrumbs" aria-label="Brødkrummer">
+<ol>
+<li><a href="/"><i class="fa-solid fa-house"></i> Hjem</a></li>
+<li aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></li>
+<li aria-current="page">Kontakt</li>
+</ol>
+</nav>
+
+<header class="page-header">
+<p class="eyebrow"><i class="fa-solid fa-comments"></i> Arena X</p>
+<h1>kontakt os</h1>
+<p class="intro">
+Har du spørgsmål til Arena X, vores efterskole, hverdagen eller noget helt andet?
+Du er altid velkommen til at kontakte os.
+</p>
+</header>
+
+<section class="contact" aria-label="Kontaktoplysninger">
+
+<!-- Hovedkontakt -->
+<article class="card dark">
+<div class="icon"><i class="fa-solid fa-phone"></i></div>
+<h2>Hovednummeret</h2>
+<p class="text">Kontakt Arena X på vores hovednummer eller e-mail.</p>
+
+<div class="contact-list">
+
+<div class="contact-item">
+<i class="fa-solid fa-phone"></i>
+<div>
+<small>Telefon</small>
+<a href="tel:+4570180182">70 18 01 82</a>
+</div>
+</div>
+
+<div class="contact-item">
+<i class="fa-solid fa-envelope"></i>
+<div>
+<small>E-mail</small>
+<a href="mailto:info@arena-x.dk">info@arena-x.dk</a>
+</div>
+</div>
+
+</div>
+
+<div class="person">
+<i class="fa-solid fa-user"></i>
+<div>
+<small>Forstander</small>
+<strong>Ulrik Larsen</strong>
+<a href="mailto:info@arena-x.dk">info@arena-x.dk</a>
+<a href="tel:+4520469541">20 46 95 41</a>
+</div>
+</div>
+</article>
+
+<!-- Adresse og bank -->
+<article class="card">
+<div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+<h2>Find os</h2>
+<p class="text">Du finder Arena X i Herning.</p>
+
+<div class="info">
+
+<div class="info-box">
+<h3><i class="fa-solid fa-location-dot"></i>Adresse</h3>
+<address>
+<strong>Arena X</strong>
+Holingknuden 2<br>
+7400 Herning<br>
+Danmark
+</address>
+<a class="map"
+href="https://www.google.com/maps/search/?api=1&query=Arena+X+Holingknuden+2+7400+Herning"
+target="_blank" rel="noopener noreferrer">
+<i class="fa-solid fa-map-location-dot"></i> Se på kort
+</a>
+</div>
+
+<!-- <div class="info-box bank">
+<h3><i class="fa-solid fa-building-columns"></i>Bank</h3>
+<div class="bank-row">
+<span>Reg.nr.</span><strong>8401</strong>
+</div>
+<div class="bank-row">
+<span>Konto nr.</span><strong>0005488541</strong>
+</div>
+</div> -->
+
+</div>
+</article>
+
+</section>
+
+<div class="cta">
+<div>
+<h2>Har du spørgsmål?</h2>
+<p>Ring til os eller send en e-mail – vi hjælper dig gerne.</p>
+</div>
+<a href="tel:+4570180182">
+<i class="fa-solid fa-phone"></i> Ring til Arena X
+</a>
+</div>
+
+</div>
+</main>
+
+<!-- =====================================================
+FOOTER
+====================================================== -->
+<div id="footer"></div>
+
+<!-- =======================================================
+JAVASCRIPT
+======================================================= -->
+
+<script src="/arena_x_navbar/arena_x_navbar.js"></script>
+<script src="/arena_x_footer/arena_x_footer.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded",()=>{});
+</script>
+
+</body>
+</html>
