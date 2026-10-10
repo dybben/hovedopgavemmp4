@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Min to-do app</title>
+    <style>
+      :root {
+        --bg: #f4f7fb;
+        --panel: #ffffff;
+        --panel-alt: #eef3ff;
+        --text: #1e293b;
+        --muted: #64748b;
+        --primary: #4f46e5;
+        --primary-dark: #3730a3;
+        --success: #22c55e;
+        --danger: #ef4444;
+        --border: #dfe7f5;
+        --shadow: 0 20px 45px rgba(79, 70, 229, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%);
+        color: var(--text);
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .app {
+        width: min(100%, 720px);
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .topbar {
+        background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+        color: white;
+        padding: 28px 26px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .topbar h1 {
+        margin: 0;
+        font-size: clamp(1.5rem, 2vw, 2.1rem);
+      }
+
+      .date {
+        font-size: 0.95rem;
+        opacity: 0.9;
+      }
+
+      .content {
+        padding: 26px;
+      }
+
+      .input-row {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      input[type="text"] {
+        flex: 1;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px 16px;
+        font-size: 1rem;
+        background: #fff;
+        color: var(--text);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      input[type="text"]:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+      }
+
+      button {
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform 0.15s ease, opacity 0.15s ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .add-btn {
+        background: var(--primary);
+        color: white;
+        padding: 14px 18px;
+        font-weight: bold;
+      }
+
+      .add-btn:hover {
+        background: var(--primary-dark);
+      }
+
+      .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        gap: 12px;
+      }
+
+      .count {
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      .clear-btn {
+        background: #f8fafc;
+        color: var(--text);
+        border: 1px solid var(--border);
+        padding: 8px 12px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+      }
+
+      .todo-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--panel-alt);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px 14px;
+      }
+
+      .todo-item.done {
+        background: #ecfdf5;
+        border-color: #bbf7d0;
+      }
+
+      .todo-item.done .label {
+        text-decoration: line-through;
+        color: var(--muted);
+      }
+
+      .checkbox {
+        width: 22px;
+        height: 22px;
+        border-radius: 8px;
+        border: 2px solid var(--primary);
+        background: white;
+        display: grid;
+        place-items: center;
+        color: white;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+
+      .todo-item.done .checkbox {
+        background: var(--success);
+        border-color: var(--success);
+      }
+
+      .label {
+        flex: 1;
+        word-break: break-word;
+        font-size: 1rem;
+      }
+
+      .delete-btn {
+        background: rgba(239, 68, 68, 0.08);
+        color: var(--danger);
+        min-width: 52px;
+        padding: 8px 10px;
+      }
+
+      .empty-state {
+        padding: 22px 12px;
+        text-align: center;
+        color: var(--muted);
+        background: #f8fafc;
+        border: 1px dashed var(--border);
+        border-radius: 14px;
+      }
+
+      @media (max-width: 560px) {
+        .topbar,
+        .toolbar,
+        .input-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .topbar {
+          text-align: center;
+        }
+
+        .content {
+          padding: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <h1>Min to-do liste</h1>
+        <div id="date" class="date">-</div>
+      </header>
+
+      <section class="content">
+        <form id="todo-form" autocomplete="off">
+          <div class="input-row">
+            <input
+              id="todo-input"
+              type="text"
+              maxlength="120"
+              placeholder="Skriv en opgave..."
+              aria-label="Ny opgave"
+            />
+            <button class="add-btn" type="submit">Tilføj</button>
+          </div>
+        </form>
+
+        <div class="toolbar">
+          <div id="count" class="count">0 tilbage</div>
+          <button id="clear-all" class="clear-btn" type="button">Ryd alle</button>
+        </div>
+
+        <ul id="todo-list" aria-live="polite"></ul>
+      </section>
+    </main>
+
+    <script>
+      const form = document.getElementById('todo-form');
+      const input = document.getElementById('todo-input');
+      const list = document.getElementById('todo-list');
+      const count = document.getElementById('count');
+      const clearAllBtn = document.getElementById('clear-all');
+      const dateEl = document.getElementById('date');
+
+      const STORAGE_KEY = 'todo-list-v1';
+      let todos = loadTodos();
+
+      function loadTodos() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+          return Array.isArray(saved) ? saved : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function saveTodos() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+      }
+
+      function renderDate() {
+        const now = new Date();
+        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+        dateEl.textContent = now.toLocaleDateString('da-DK', options);
+      }
+
+      function render() {
+        list.innerHTML = '';
+
+        if (todos.length === 0) {
+          const empty = document.createElement('li');
+          empty.className = 'empty-state';
+          empty.textContent = 'Ingen opgaver endnu. Tilføj din første opgave!';
+          list.appendChild(empty);
+        } else {
+          todos.forEach((todo) => {
+            const item = document.createElement('li');
+            item.className = `todo-item ${todo.done ? 'done' : ''}`;
+
+            const checkbox = document.createElement('button');
+            checkbox.type = 'button';
+            checkbox.className = 'checkbox';
+            checkbox.setAttribute('aria-label', todo.done ? 'Markér som ikke færdig' : 'Markér som færdig');
+            checkbox.textContent = todo.done ? '✓' : '';
+
+            const label = document.createElement('span');
+            label.className = 'label';
+            label.textContent = todo.text;
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.type = 'button';
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.textContent = 'Slet';
+            deleteBtn.setAttribute('aria-label', `Slet opgave: ${todo.text}`);
+
+            checkbox.addEventListener('click', () => {
+              todo.done = !todo.done;
+              saveTodos();
+              render();
+            });
+
+            deleteBtn.addEventListener('click', () => {
+              todos = todos.filter((item) => item.id !== todo.id);
+              saveTodos();
+              render();
+            });
+
+            item.appendChild(checkbox);
+            item.appendChild(label);
+            item.appendChild(deleteBtn);
+            list.appendChild(item);
+          });
+        }
+
+        const remaining = todos.filter((todo) => !todo.done).length;
+        count.textContent = `${remaining} tilbage`;
+      }
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const text = input.value.trim();
+        if (!text) {
+          input.focus();
+          return;
+        }
+
+        todos.unshift({
+          id: Date.now(),
+          text,
+          done: false,
+        });
+
+        input.value = '';
+        input.focus();
+        saveTodos();
+        render();
+      });
+
+      clearAllBtn.addEventListener('click', () => {
+        if (todos.length === 0) return;
+
+        const confirmDelete = window.confirm('Er du sikker på, at du vil slette alle opgaver?');
+        if (!confirmDelete) return;
+
+        todos = [];
+        saveTodos();
+        render();
+      });
+
+      renderDate();
+      render();
+    </script>
+  </body>
+</html>
